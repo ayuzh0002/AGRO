@@ -92,3 +92,117 @@ export const getWeatherLocation = async (query) => {
 // ── Health ──
 export const getHealth = () =>
   fetch('http://localhost:8000/health').then((r) => r.json());
+
+// ── Farm Monitoring & Analysis (New Endpoints) ──
+
+export const getFarmConfig = async () => {
+  try {
+    return await request('/farm-config');
+  } catch {
+    const res = await fetch('http://localhost:8000/farm-config');
+    return res.json();
+  }
+};
+
+export const getMapsConfig = async () => {
+  try {
+    const res = await fetch('http://localhost:8000/maps-config');
+    return res.json();
+  } catch {
+    return {};
+  }
+};
+
+export const getFarmWeather = async () => {
+  try {
+    return await request('/farm-weather');
+  } catch {
+    const res = await fetch('http://localhost:8000/farm-weather');
+    return res.json();
+  }
+};
+
+export const getAgricultureAnalysis = async () => {
+  try {
+    return await request('/agriculture-analysis');
+  } catch {
+    const res = await fetch('http://localhost:8000/agriculture-analysis');
+    return res.json();
+  }
+};
+
+export const getSensorData = async () => {
+  try {
+    return await request('/sensor-data');
+  } catch {
+    const res = await fetch('http://localhost:8000/sensor-data');
+    return res.json();
+  }
+};
+
+export const getSensorHistory = async (limit = 30) => {
+  try {
+    return await request(`/sensor-data/history?limit=${limit}`);
+  } catch {
+    const res = await fetch(`http://localhost:8000/sensor-data/history?limit=${limit}`);
+    return res.json();
+  }
+};
+
+export const aiAnalyzeField = async (payload = {}) => {
+  try {
+    return await request('/ai/analyze-field', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    const res = await fetch('http://localhost:8000/ai/analyze-field', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    return res.json();
+  }
+};
+
+export const aiChat = async (message, context = null) => {
+  try {
+    return await request('/ai/chat', {
+      method: 'POST',
+      body: JSON.stringify({ message, context }),
+    });
+  } catch {
+    const res = await fetch('http://localhost:8000/ai/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, context }),
+    });
+    return res.json();
+  }
+};
+
+export const getMLStatus = async () => {
+  try {
+    return await request('/ml/status');
+  } catch {
+    const res = await fetch('http://localhost:8000/ml/status');
+    return res.json();
+  }
+};
+
+export const runMLPredict = async (payload = {}) => {
+  try {
+    return await request('/ml/predict', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    const res = await fetch('http://localhost:8000/ml/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    return res.json();
+  }
+};
+

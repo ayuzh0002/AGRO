@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "agro-in-monitoring",
+  "private_key_id": "b34701624cc3c3336ff14094ad2c0aa8fad540ab",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCWOS8uaNk1fiYW\nWz4mALdz9Ztf2RU/iJvuHTyiy8GxjXBb/fHDYTk4jhryf0tN5C6tbZXdbBb4s1kI\nspsSrUp9k9ix70upGFWG62DFsHJnLc6bgxC+nk7Up4Rzyeh+JbWxYezYzL0IddZX\nj0ZI2gdQoSeSQxgP+Rc/QcNgppHjzL05Y4vPoIWOBc4C4a5vR4A78d3/JoGmVDZC\nCPQXvIPE045BlGTMopoGLZsEshOBAYzXHwQbAxkWKxtgVvyTbmHy9uRuVKwLGZ38\nBPE/tdGqai8+3J8hQYgDUqWma2o28AuopdCBt+MTgdAMp1nrlgMutHAIa+YsEoHw\nSNmLROERAgMBAAECggEAG+kvB3fql4JDMFcukmACtdRV1HageIf4tMKQ4AxshgEp\n9aWWlD8NoyDgB9s30haJx6Y7OIMbN4UXD0MkBdHVq8Ra+CBmVdoUFffIqKJSdzIv\nF3zAETKXofIn7V1/yWRXQEhZ+aP8oURHmUgg/msn/cabdBTsNReKRrIAy4XXSFQa\nmK8skSfnvAmY1tx/s/SyVJ9LHhWv2nt7QKaQKS+mK1Xt+nuh1Y1/B0usAoTLEE6v\npR+BkgNPXhdqfB4UVXI4u1od3JaIFKPEOLsM5ETQ01b2k4AvpS8MyQcAj5+WMCH5\nunRMD/P7p3a0/WvDZO0YQlpbOmK4vXxZGnk4J6/CeQKBgQDHNTujHYeLgyFQLFj9\nArgRZ6IPY4b49mHC3cq+Pwztdc4xAT34uZZeo99X/HUBfnv1a/qW2xuzphYpI+4/\nGcZqpn72VDSR7hD1bmlteB2uZBM8DCpOkoWCEssLRDhZHULXFIUwcyQ8cWTTAnqK\npKrozGcf2sGL65cIhWDzsU/UVQKBgQDBDOrRclUAursuiTXw2tATdl+aBMeDN6vx\nBLE8t1BqAC2xQUVVWp4NrpZjnZOwG+c3yKzj4LLha0WYKwKl6svRoenjAe3MXNhe\ndCmf5zh/ReGt50GsywRYxd2hv/lxlfe3vS0tH5hGIjyu6VcwCVbI3TeNMhzzyVue\n8wpn/hl1zQKBgDVMwfMn0H98i2pHI1w24QcPImZZq+BrE8cuzrNObWgPsCaefXVS\nOrCByh1hl/DZZdNJm9fHMkdD9gP18CYEAHnCqI/CAfrVpsX0T9MRY2eosRjM7Hjv\nbTdbTeZqz2TQlnSzsds/w39Em8R1klIMMwpsvl7gig6k71lBTqqFU6WtAoGBAL8B\nk9g1gksddpRdqCQtq5CGH6MZNXnr/FCU7vP/AC5RDOSDiyEfbqBk7GGViInHoec8\nw2sYaITGiW48p/sXrCA3Tl2QDAOWnXIfBwwyT2EF+HwDAqT/ncZjx50Bf8HVuupt\n36P0zcoel+IL93sM0nQdBJjMS38d7GwBVnt8Gx7FAoGANrnp3+ERnqZnXCMmReIf\nxQ4k4eRhLhrgKNaH2isqNeFiqepasE4ikpRB9Hb95e+SB3qoY8HBUnYnHaOyCViM\na1PHwMboYv4co/ro6IcqT4shkyaQ1LXzDC/9Qs+b4acUZmgVTcvtBt7qIEMN45U0\nOcseWQ8cZIE2yWYsVPQD8UQ=\n-----END PRIVATE KEY-----\n",
+  "client_email": "gee-agro-service@agro-in-monitoring.iam.gserviceaccount.com",
+  "client_id": "103301502333729122060",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/gee-agro-service%40agro-in-monitoring.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
