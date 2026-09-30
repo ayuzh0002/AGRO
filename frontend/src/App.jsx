@@ -6,10 +6,12 @@ import DashboardPage from './pages/DashboardPage';
 import DiagnosePage from './pages/DiagnosePage';
 import SoilPage from './pages/SoilPage';
 import SeedsPage from './pages/SeedsPage';
+import IoTPage from './pages/IoTPage';
 
 const NAV = [
   { to: '/',          icon: '🏠', label: 'Home' },
-  { to: '/farmers',   icon: '👨‍🌾', label: 'Farmers' },
+  { to: '/farmers',   icon: '👨\u200d🌾', label: 'Farmers' },
+  { to: '/iot',       icon: '📡', label: 'IoT Sensors' },
   { to: '/diagnose',  icon: '🔬', label: 'Diagnose' },
   { to: '/soil',      icon: '🧪', label: 'Soil Data' },
   { to: '/seeds',     icon: '🌱', label: 'Seed Exchange' },
@@ -46,6 +48,7 @@ function PageTitle() {
   const titles = {
     '/': ['Home', 'System overview and quick stats'],
     '/farmers': ['Farmers', 'Manage registered farmer profiles'],
+    '/iot': ['IoT Sensors', 'Real-time ESP32 sensor monitoring dashboard'],
     '/diagnose': ['Crop Diagnosis', 'Upload a plant photo for AI analysis'],
     '/soil': ['Soil Data', 'Browse rover soil telemetry readings'],
     '/seeds': ['Seed Exchange', 'Farmer-to-farmer seed marketplace'],
@@ -90,6 +93,7 @@ export default function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/farmers" element={<FarmersPage />} />
               <Route path="/dashboard/:farmerId" element={<DashboardPage />} />
+              <Route path="/iot" element={<IoTPage />} />
               <Route path="/diagnose" element={<DiagnosePage />} />
               <Route path="/soil" element={<SoilPage />} />
               <Route path="/seeds" element={<SeedsPage />} />

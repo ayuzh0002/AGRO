@@ -218,3 +218,35 @@ class SeedListing(Base):
 
     def __repr__(self) -> str:
         return f"<SeedListing id={self.id} crop={self.crop_name!r} type={self.listing_type}>"
+
+
+# ── ESP32 IoT Sensor Readings ──────────────────────────────────────────────
+
+class SensorReading(Base):
+    """
+    Real-time sensor packet pushed by an ESP32 node over Wi-Fi.
+
+    Only ``soil_status`` is required for the initial prototype.
+    All other columns are nullable so future sensors (CO₂, NPK) can be
+    added to the ESP32 sketch without altering this table structure —
+    SQLite simply stores NULL for columns the firmware doesn't send yet.
+    """
+
+    __tablename__ = "sensor_readings"
+
+    id          = Column(Integer, primary_key=True, index=True)
+    timestamp   = Column(DateTime(timezone=True), default=_now, nullable=False, index=True)
+
+    # ── Soil moisture (digital) ──────────────────────────────────────────
+    soil_status = Column(String(10), nullable=False, comment="WET or DRY")
+
+    # ── CO₂ ─────────────────────────────────────────────────────────────
+    co2         = Column(Float, nullable=True, comment="CO₂ concentration (ppm)")
+
+    # ── NPK macro-nutrients ──────────────────────────────────────────────
+    nitrogen    = Column(Float, nullable=True, comment="Nitrogen (mg/kg)")
+    phosphorus  = Column(Float, nullable=True, comment="Phosphorus (mg/kg)")
+    potassium   = Column(Float, nullable=True, comment="Potassium (mg/kg)")
+
+    def __repr__(self) -> str:
+        return f"<SensorReading id={self.id} soil={self.soil_status!r} ts={self.timestamp}>"

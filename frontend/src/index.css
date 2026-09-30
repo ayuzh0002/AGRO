@@ -831,3 +831,278 @@ a { color: inherit; text-decoration: none; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .seed-grid { grid-template-columns: 1fr; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   IoT SENSOR DASHBOARD
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Status Bar ─────────────────────────────────────────────────────────── */
+.iot-status-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--gray-900);
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  align-items: center;
+}
+
+.iot-status-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+}
+
+.iot-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.iot-status-dot.online  { background: var(--green-400); box-shadow: 0 0 6px var(--green-400); animation: iot-pulse 2s infinite; }
+.iot-status-dot.offline { background: var(--red-500); }
+.iot-status-dot.waiting { background: var(--amber-500); animation: iot-pulse 1.5s infinite; }
+
+@keyframes iot-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.3); }
+}
+
+.iot-status-label  { color: rgba(255,255,255,0.45); font-weight: 500; }
+.iot-status-value  { color: #fff; }
+.iot-status-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.15); margin: 0 4px; }
+.iot-status-bar .iot-last-updated { margin-left: auto; font-size: 0.72rem; color: rgba(255,255,255,0.45); }
+
+/* ── Main Soil Status Card ──────────────────────────────────────────────── */
+.soil-hero-card {
+  background: linear-gradient(135deg, var(--green-900) 0%, #0a3d1e 100%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.soil-hero-card::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.03);
+  pointer-events: none;
+}
+
+.soil-hero-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.soil-hero-icon.wet  { background: rgba(34,197,94,0.2); box-shadow: 0 0 30px rgba(34,197,94,0.25); }
+.soil-hero-icon.dry  { background: rgba(245,158,11,0.2); box-shadow: 0 0 30px rgba(245,158,11,0.25); }
+.soil-hero-icon.none { background: rgba(107,114,128,0.2); }
+
+.soil-hero-icon.wet::after,
+.soil-hero-icon.dry::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid;
+  animation: iot-ring 2.5s ease-out infinite;
+}
+.soil-hero-icon.wet::after { border-color: rgba(34,197,94,0.4); }
+.soil-hero-icon.dry::after { border-color: rgba(245,158,11,0.4); }
+
+@keyframes iot-ring {
+  0%   { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+
+.soil-hero-info { flex: 1; }
+
+.soil-hero-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 4px;
+}
+
+.soil-hero-status {
+  font-size: 2.4rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.soil-hero-status.wet  { color: var(--green-400); }
+.soil-hero-status.dry  { color: var(--amber-500); }
+.soil-hero-status.none { color: rgba(255,255,255,0.3); font-size: 1.2rem; font-weight: 600; }
+
+.soil-hero-sub {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.45);
+  margin-top: 8px;
+}
+
+/* ── Sensor Metric Cards Grid ───────────────────────────────────────────── */
+.iot-sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.iot-metric-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.iot-metric-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.iot-metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.iot-metric-card.co2::before       { background: linear-gradient(90deg, #06b6d4, #0ea5e9); }
+.iot-metric-card.nitrogen::before  { background: linear-gradient(90deg, var(--green-500), var(--green-400)); }
+.iot-metric-card.phosphorus::before{ background: linear-gradient(90deg, #f97316, #fb923c); }
+.iot-metric-card.potassium::before { background: linear-gradient(90deg, #a855f7, #c084fc); }
+
+.iot-metric-icon {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.iot-metric-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  margin-bottom: 4px;
+}
+
+.iot-metric-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--gray-900);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.iot-metric-unit {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--gray-400);
+  margin-left: 4px;
+}
+
+.iot-metric-na {
+  font-size: 0.85rem;
+  color: var(--gray-300);
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* ── History Table Section ──────────────────────────────────────────────── */
+.iot-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.iot-history-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gray-800);
+}
+
+.iot-history-count {
+  font-size: 0.78rem;
+  color: var(--gray-400);
+}
+
+/* soil status mini badge in table */
+.soil-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.soil-badge.wet { background: var(--green-100); color: var(--green-700); }
+.soil-badge.dry { background: var(--amber-100); color: var(--amber-600); }
+
+/* ── Offline / No-data states ───────────────────────────────────────────── */
+.iot-offline-banner {
+  background: var(--red-50);
+  border: 1px solid var(--red-100);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-size: 0.88rem;
+  color: var(--red-600);
+  font-weight: 500;
+}
+
+.iot-waiting-banner {
+  background: var(--amber-50);
+  border: 1px solid var(--amber-100);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-size: 0.88rem;
+  color: var(--amber-600);
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .soil-hero-card   { flex-direction: column; text-align: center; }
+  .iot-sensor-grid  { grid-template-columns: 1fr 1fr; }
+  .iot-status-bar   { flex-direction: column; align-items: flex-start; }
+  .iot-status-bar .iot-last-updated { margin-left: 0; }
+}
