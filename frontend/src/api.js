@@ -70,6 +70,25 @@ export const getSeeds = (params = {}) => {
 export const createSeed = (data) =>
   request('/seeds/', { method: 'POST', body: JSON.stringify(data) });
 
+// ── Weather ──
+export const getWeather = async (lat = 20.5937, lon = 78.9629, locationName = 'India') => {
+  try {
+    return await request(`/weather?lat=${lat}&lon=${lon}&location_name=${encodeURIComponent(locationName)}`);
+  } catch {
+    const res = await fetch(`http://localhost:8000/weather?lat=${lat}&lon=${lon}&location_name=${encodeURIComponent(locationName)}`);
+    return res.json();
+  }
+};
+
+export const getWeatherLocation = async (query) => {
+  try {
+    return await request(`/weather/location?q=${encodeURIComponent(query)}`);
+  } catch {
+    const res = await fetch(`http://localhost:8000/weather/location?q=${encodeURIComponent(query)}`);
+    return res.json();
+  }
+};
+
 // ── Health ──
 export const getHealth = () =>
   fetch('http://localhost:8000/health').then((r) => r.json());

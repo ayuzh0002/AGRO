@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route, NavLink, useLocation } from 'react-router-dom';
 import HomePage from './pages/HomePage';
+import WeatherPage from './pages/WeatherPage';
 import FarmersPage from './pages/FarmersPage';
 import DashboardPage from './pages/DashboardPage';
 import DiagnosePage from './pages/DiagnosePage';
@@ -10,7 +11,8 @@ import IoTPage from './pages/IoTPage';
 
 const NAV = [
   { to: '/',          icon: '🏠', label: 'Home' },
-  { to: '/farmers',   icon: '👨\u200d🌾', label: 'Farmers' },
+  { to: '/weather',   icon: '🌐', label: 'Weather & Earth' },
+  { to: '/farmers',   icon: '👨‍🌾', label: 'Farmers' },
   { to: '/iot',       icon: '📡', label: 'IoT Sensors' },
   { to: '/diagnose',  icon: '🔬', label: 'Diagnose' },
   { to: '/soil',      icon: '🧪', label: 'Soil Data' },
@@ -47,6 +49,7 @@ function PageTitle() {
   const loc = useLocation();
   const titles = {
     '/': ['Home', 'System overview and quick stats'],
+    '/weather': ['Weather Prediction & Google Earth', '3-month seasonal weather forecast and satellite earth map'],
     '/farmers': ['Farmers', 'Manage registered farmer profiles'],
     '/iot': ['IoT Sensors', 'Real-time ESP32 sensor monitoring dashboard'],
     '/diagnose': ['Crop Diagnosis', 'Upload a plant photo for AI analysis'],
@@ -91,6 +94,7 @@ export default function App() {
           <div className="page-body">
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/weather" element={<WeatherPage />} />
               <Route path="/farmers" element={<FarmersPage />} />
               <Route path="/dashboard/:farmerId" element={<DashboardPage />} />
               <Route path="/iot" element={<IoTPage />} />

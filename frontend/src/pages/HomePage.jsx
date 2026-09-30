@@ -109,7 +109,10 @@ export default function HomePage() {
           <span className="card-title">⚡ Quick Operations</span>
         </div>
         <div className="card-body" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          <Link to="/farmers" className="btn btn-primary">
+          <Link to="/weather" className="btn btn-primary">
+            <span>🌐</span> 3-Month Weather Forecast
+          </Link>
+          <Link to="/farmers" className="btn btn-secondary">
             <span>👨‍🌾</span> Manage Farmers
           </Link>
           <Link to="/diagnose" className="btn btn-secondary">

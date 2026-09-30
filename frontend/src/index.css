@@ -996,10 +996,12 @@ a { color: inherit; text-decoration: none; }
   border-radius: var(--radius) var(--radius) 0 0;
 }
 
-.iot-metric-card.co2::before       { background: linear-gradient(90deg, #06b6d4, #0ea5e9); }
-.iot-metric-card.nitrogen::before  { background: linear-gradient(90deg, var(--green-500), var(--green-400)); }
-.iot-metric-card.phosphorus::before{ background: linear-gradient(90deg, #f97316, #fb923c); }
-.iot-metric-card.potassium::before { background: linear-gradient(90deg, #a855f7, #c084fc); }
+.iot-metric-card.temperature::before{ background: linear-gradient(90deg, #ef4444, #f97316); }
+.iot-metric-card.humidity::before   { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+.iot-metric-card.co2::before        { background: linear-gradient(90deg, #06b6d4, #0ea5e9); }
+.iot-metric-card.nitrogen::before   { background: linear-gradient(90deg, var(--green-500), var(--green-400)); }
+.iot-metric-card.phosphorus::before { background: linear-gradient(90deg, #f97316, #fb923c); }
+.iot-metric-card.potassium::before  { background: linear-gradient(90deg, #a855f7, #c084fc); }
 
 .iot-metric-icon {
   font-size: 1.5rem;

@@ -315,26 +315,29 @@ class SensorDataIn(BaseModel):
     """
     Payload pushed by the ESP32 node via HTTP POST /sensor-data.
 
-    Only soil_status is required for the initial prototype.
-    All other fields are Optional so new sensors can be added to the
-    ESP32 sketch and backend independently.
+    Accepts soil_status (required), co2, temperature (DHT11), humidity (DHT11),
+    and optional NPK values.
     """
-    soil_status: str = Field(
-        ...,
+    soil_status: Optional[str] = Field(
+        "DRY",
         description="Soil moisture reading: 'WET' or 'DRY'",
         examples=["WET"],
     )
-    co2:         Optional[float] = Field(None, ge=0,   description="CO₂ concentration (ppm)")
-    nitrogen:    Optional[float] = Field(None, ge=0,   description="Nitrogen (mg/kg)")
-    phosphorus:  Optional[float] = Field(None, ge=0,   description="Phosphorus (mg/kg)")
-    potassium:   Optional[float] = Field(None, ge=0,   description="Potassium (mg/kg)")
+    co2:         Optional[float] = Field(None, description="CO₂ concentration (ppm)")
+    temperature: Optional[float] = Field(None, description="Air temperature (°C) from DHT11")
+    humidity:    Optional[float] = Field(None, description="Relative humidity (%) from DHT11")
+    nitrogen:    Optional[float] = Field(None, description="Nitrogen (mg/kg)")
+    phosphorus:  Optional[float] = Field(None, description="Phosphorus (mg/kg)")
+    potassium:   Optional[float] = Field(None, description="Potassium (mg/kg)")
 
     @field_validator("soil_status")
     @classmethod
-    def validate_soil_status(cls, v: str) -> str:
-        val = v.strip().upper()
+    def validate_soil_status(cls, v: Optional[str]) -> str:
+        if not v:
+            return "DRY"
+        val = str(v).strip().upper()
         if val not in {"WET", "DRY"}:
-            raise ValueError("soil_status must be 'WET' or 'DRY'")
+            return "DRY"
         return val
 
 
@@ -342,6 +345,8 @@ class SensorDataOut(BaseModel):
     """Latest sensor state returned to the React frontend via GET /sensor-data."""
     soil_status:  Optional[str]   = None
     co2:          Optional[float] = None
+    temperature:  Optional[float] = None
+    humidity:     Optional[float] = None
     nitrogen:     Optional[float] = None
     phosphorus:   Optional[float] = None
     potassium:    Optional[float] = None
@@ -354,10 +359,12 @@ class SensorReadingHistoryItem(BaseModel):
     id:           int
     timestamp:    datetime
     soil_status:  str
-    co2:          Optional[float]
-    nitrogen:     Optional[float]
-    phosphorus:   Optional[float]
-    potassium:    Optional[float]
+    co2:          Optional[float] = None
+    temperature:  Optional[float] = None
+    humidity:     Optional[float] = None
+    nitrogen:     Optional[float] = None
+    phosphorus:   Optional[float] = None
+    potassium:    Optional[float] = None
 
     model_config = ConfigDict(from_attributes=True)
 
