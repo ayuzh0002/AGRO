@@ -109,7 +109,16 @@ export default function HomePage() {
           <span className="card-title">⚡ Quick Operations</span>
         </div>
         <div className="card-body" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          <Link to="/farmers" className="btn btn-primary">
+          <Link to="/field-monitoring" className="btn btn-primary" style={{ backgroundColor: '#059669', borderColor: '#059669' }}>
+            <span>🌾</span> Agricultural Land Monitoring (Field 01)
+          </Link>
+          <Link to="/weather" className="btn btn-secondary">
+            <span>🌐</span> 3-Month Weather Forecast
+          </Link>
+          <Link to="/iot" className="btn btn-secondary">
+            <span>📡</span> ESP32 Sensors Live
+          </Link>
+          <Link to="/farmers" className="btn btn-secondary">
             <span>👨‍🌾</span> Manage Farmers
           </Link>
           <Link to="/diagnose" className="btn btn-secondary">
@@ -117,9 +126,6 @@ export default function HomePage() {
           </Link>
           <Link to="/soil" className="btn btn-secondary">
             <span>🧪</span> View Soil Readings
-          </Link>
-          <Link to="/seeds" className="btn btn-secondary">
-            <span>🌱</span> Seed Marketplace
           </Link>
         </div>
       </div>

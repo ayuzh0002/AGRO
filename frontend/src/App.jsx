@@ -1,20 +1,24 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route, NavLink, useLocation } from 'react-router-dom';
 import HomePage from './pages/HomePage';
+import WeatherPage from './pages/WeatherPage';
 import FarmersPage from './pages/FarmersPage';
 import DashboardPage from './pages/DashboardPage';
 import DiagnosePage from './pages/DiagnosePage';
 import SoilPage from './pages/SoilPage';
 import SeedsPage from './pages/SeedsPage';
 import IoTPage from './pages/IoTPage';
+import FieldMonitoringPage from './pages/FieldMonitoringPage';
 
 const NAV = [
-  { to: '/',          icon: '🏠', label: 'Home' },
-  { to: '/farmers',   icon: '👨\u200d🌾', label: 'Farmers' },
-  { to: '/iot',       icon: '📡', label: 'IoT Sensors' },
-  { to: '/diagnose',  icon: '🔬', label: 'Diagnose' },
-  { to: '/soil',      icon: '🧪', label: 'Soil Data' },
-  { to: '/seeds',     icon: '🌱', label: 'Seed Exchange' },
+  { to: '/',                  icon: '🏠', label: 'Home' },
+  { to: '/field-monitoring',  icon: '🗺️', label: 'Field Monitoring' },
+  { to: '/weather',           icon: '🌐', label: 'Weather & Earth' },
+  { to: '/farmers',           icon: '👨‍🌾', label: 'Farmers' },
+  { to: '/iot',               icon: '📡', label: 'IoT Sensors' },
+  { to: '/diagnose',          icon: '🔬', label: 'Diagnose' },
+  { to: '/soil',              icon: '🧪', label: 'Soil Data' },
+  { to: '/seeds',             icon: '🌱', label: 'Seed Exchange' },
 ];
 
 function Sidebar({ open, onClose }) {
@@ -47,6 +51,8 @@ function PageTitle() {
   const loc = useLocation();
   const titles = {
     '/': ['Home', 'System overview and quick stats'],
+    '/field-monitoring': ['Agricultural Land Monitoring', 'Google Satellite map, field boundary, ESP32 telemetry, weather & AI analysis'],
+    '/weather': ['Weather Prediction & Google Earth', '3-month seasonal weather forecast and satellite earth map'],
     '/farmers': ['Farmers', 'Manage registered farmer profiles'],
     '/iot': ['IoT Sensors', 'Real-time ESP32 sensor monitoring dashboard'],
     '/diagnose': ['Crop Diagnosis', 'Upload a plant photo for AI analysis'],
@@ -91,6 +97,8 @@ export default function App() {
           <div className="page-body">
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/field-monitoring" element={<FieldMonitoringPage />} />
+              <Route path="/weather" element={<WeatherPage />} />
               <Route path="/farmers" element={<FarmersPage />} />
               <Route path="/dashboard/:farmerId" element={<DashboardPage />} />
               <Route path="/iot" element={<IoTPage />} />

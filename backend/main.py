@@ -23,7 +23,7 @@ from backend.config import settings
 from backend.database import Base, engine
 
 # ── Routers ────────────────────────────────────────────────────────────────
-from backend.routers import dashboard, diagnoses, farmers, rover, seeds, soil, sensors
+from backend.routers import dashboard, diagnoses, farmers, rover, seeds, soil, sensors, weather, farm
 
 logging.basicConfig(level=logging.DEBUG if settings.DEBUG else logging.INFO)
 logger = logging.getLogger(__name__)
@@ -85,11 +85,14 @@ app.include_router(soil.router,      prefix="/api/v1")
 app.include_router(diagnoses.router, prefix="/api/v1")
 app.include_router(seeds.router,     prefix="/api/v1")
 app.include_router(dashboard.router, prefix="/api/v1")
-app.include_router(sensors.router,  prefix="/api/v1")
+app.include_router(sensors.router,   prefix="/api/v1")
+app.include_router(weather.router,   prefix="/api/v1")
+app.include_router(farm.router,      prefix="/api/v1")
 
-# Also mount at root level so ESP32 can POST to http://<IP>:8000/sensor-data
-# (no /api/v1 prefix needed in the Arduino sketch)
+# Also mount at root level so endpoints like /weather work directly
 app.include_router(sensors.router)
+app.include_router(weather.router)
+app.include_router(farm.router)   # /farm-weather, /agriculture-analysis, /ai/*
 
 # Direct root-level mounts for convenience (/dashboard/{farmer_id}, /rover/..., /manual-upload)
 app.include_router(dashboard.router, include_in_schema=False)
@@ -119,6 +122,36 @@ WIREFRAMES_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", 
 @app.get("/health", tags=["Meta"], summary="Health check")
 def health():
     return {"status": "ok", "version": settings.APP_VERSION}
+
+
+@app.get("/maps-config", tags=["Meta"], summary="Google Maps public config (no API key)")
+def maps_config():
+    """
+    Returns the Google Maps API key for the frontend.
+
+    SECURITY NOTE: This endpoint returns the Maps API key so the React
+    frontend can load the Maps JavaScript API without baking the key into
+    the Vite bundle.  Restrict the key to your domain in Google Cloud Console
+    (Application Restrictions → HTTP referrers) so it cannot be misused even
+    if someone reads it from the network tab.
+
+    Never expose other secrets (database password, Gemini key, etc.) here.
+    """
+    import json
+    boundary = []
+    if settings.FARM_BOUNDARY_JSON.strip():
+        try:
+            boundary = json.loads(settings.FARM_BOUNDARY_JSON)
+        except Exception:
+            boundary = []
+    return {
+        "google_maps_api_key": settings.GOOGLE_MAPS_API_KEY or "",
+        "farm_name":           settings.FARM_NAME,
+        "latitude":            settings.FARM_LATITUDE,
+        "longitude":           settings.FARM_LONGITUDE,
+        "boundary":            boundary,
+        "map_zoom":            17,
+    }
 
 
 @app.get("/", tags=["Web"], summary="AgroIn Web Interface")

@@ -243,10 +243,37 @@ class SensorReading(Base):
     # ── CO₂ ─────────────────────────────────────────────────────────────
     co2         = Column(Float, nullable=True, comment="CO₂ concentration (ppm)")
 
+    # ── Atmospheric (DHT11 / DHT22) ──────────────────────────────────────
+    temperature = Column(Float, nullable=True, comment="Air temperature (°C)")
+    humidity    = Column(Float, nullable=True, comment="Relative humidity (%)")
+
     # ── NPK macro-nutrients ──────────────────────────────────────────────
     nitrogen    = Column(Float, nullable=True, comment="Nitrogen (mg/kg)")
     phosphorus  = Column(Float, nullable=True, comment="Phosphorus (mg/kg)")
     potassium   = Column(Float, nullable=True, comment="Potassium (mg/kg)")
 
     def __repr__(self) -> str:
-        return f"<SensorReading id={self.id} soil={self.soil_status!r} ts={self.timestamp}>"
+        return f"<SensorReading id={self.id} soil={self.soil_status!r} temp={self.temperature} hum={self.humidity} ts={self.timestamp}>"
+
+
+# ── Weather Query & Prediction Log ─────────────────────────────────────────
+
+class WeatherLog(Base):
+    """
+    Stores weather query history, satellite coordinates, and 3-month predictions.
+    """
+
+    __tablename__ = "weather_logs"
+
+    id            = Column(Integer, primary_key=True, index=True)
+    location_name = Column(String(255), nullable=False, index=True)
+    latitude      = Column(Float, nullable=False)
+    longitude     = Column(Float, nullable=False)
+    temperature   = Column(Float, nullable=True)
+    humidity      = Column(Float, nullable=True)
+    condition     = Column(String(100), nullable=True)
+    prediction_json = Column(Text, nullable=True)  # Stores 3-month forecast payload as JSON string
+    created_at    = Column(DateTime(timezone=True), default=_now, nullable=False, index=True)
+
+    def __repr__(self) -> str:
+        return f"<WeatherLog id={self.id} loc={self.location_name!r} temp={self.temperature}>"

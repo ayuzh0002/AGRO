@@ -1,0 +1,41 @@
+# Environment variables and secrets
+.env
+.env.local
+*.key
+*.pem
+service_account*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads & Media
+uploads/diagnoses/*
+!uploads/diagnoses/.gitkeep
+
+# Frontend & Node
+node_modules/
+dist/
+dist-ssr/
+*.local
+.npm/
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

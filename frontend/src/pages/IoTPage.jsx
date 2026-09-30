@@ -148,6 +148,8 @@ function HistoryTable({ readings }) {
             <th>#</th>
             <th>Time</th>
             <th>Soil Status</th>
+            <th>Temp (°C)</th>
+            <th>Humidity (%)</th>
             <th>CO₂ (ppm)</th>
             <th>N (mg/kg)</th>
             <th>P (mg/kg)</th>
@@ -168,10 +170,12 @@ function HistoryTable({ readings }) {
                     {cls === 'wet' ? '💧' : '🌵'} {r.soil_status}
                   </span>
                 </td>
-                <td>{r.co2 != null ? r.co2.toFixed(1) : <span style={{ color: 'var(--gray-300)' }}>—</span>}</td>
-                <td>{r.nitrogen   != null ? r.nitrogen.toFixed(1)   : <span style={{ color: 'var(--gray-300)' }}>—</span>}</td>
-                <td>{r.phosphorus != null ? r.phosphorus.toFixed(1) : <span style={{ color: 'var(--gray-300)' }}>—</span>}</td>
-                <td>{r.potassium  != null ? r.potassium.toFixed(1)  : <span style={{ color: 'var(--gray-300)' }}>—</span>}</td>
+                <td>{r.temperature != null ? r.temperature.toFixed(1) : <span style={{ color: 'var(--gray-300)' }}>—</span>}</td>
+                <td>{r.humidity    != null ? r.humidity.toFixed(1)    : <span style={{ color: 'var(--gray-300)' }}>—</span>}</td>
+                <td>{r.co2         != null ? r.co2.toFixed(1)         : <span style={{ color: 'var(--gray-300)' }}>—</span>}</td>
+                <td>{r.nitrogen    != null ? r.nitrogen.toFixed(1)    : <span style={{ color: 'var(--gray-300)' }}>—</span>}</td>
+                <td>{r.phosphorus  != null ? r.phosphorus.toFixed(1)  : <span style={{ color: 'var(--gray-300)' }}>—</span>}</td>
+                <td>{r.potassium   != null ? r.potassium.toFixed(1)   : <span style={{ color: 'var(--gray-300)' }}>—</span>}</td>
               </tr>
             );
           })}
@@ -256,8 +260,10 @@ export default function IoTPage() {
   // ── Which metric cards to render ─────────────────────────────────────────
   // Only show cards for sensors that have EVER reported data
   const hasHistory = history.length > 0;
-  const anyCO2  = hasHistory && history.some(r => r.co2 != null);
-  const anyNPK  = hasHistory && history.some(r => r.nitrogen != null);
+  const anyCO2  = (latest?.co2 != null) || (hasHistory && history.some(r => r.co2 != null));
+  const anyTemp = (latest?.temperature != null) || (hasHistory && history.some(r => r.temperature != null));
+  const anyHum  = (latest?.humidity != null) || (hasHistory && history.some(r => r.humidity != null));
+  const anyNPK  = (latest?.nitrogen != null) || (hasHistory && history.some(r => r.nitrogen != null));
 
   return (
     <div>
@@ -295,8 +301,26 @@ export default function IoTPage() {
       <SoilHeroCard soilStatus={latest?.soil_status} />
 
       {/* ── Metric cards (only visible when sensors are connected) ── */}
-      {(anyCO2 || anyNPK) && (
+      {(anyTemp || anyHum || anyCO2 || anyNPK) && (
         <div className="iot-sensor-grid">
+          {anyTemp && (
+            <MetricCard
+              type="temperature"
+              icon="🌡️"
+              label="Temperature"
+              value={latest?.temperature}
+              unit="°C"
+            />
+          )}
+          {anyHum && (
+            <MetricCard
+              type="humidity"
+              icon="💧"
+              label="Humidity"
+              value={latest?.humidity}
+              unit="%"
+            />
+          )}
           {anyCO2 && (
             <MetricCard
               type="co2"
