@@ -23,7 +23,7 @@ from backend.config import settings
 from backend.database import Base, engine
 
 # ── Routers ────────────────────────────────────────────────────────────────
-from backend.routers import dashboard, diagnoses, farmers, rover, seeds, soil
+from backend.routers import dashboard, diagnoses, farmers, rover, seeds, soil, sensors
 
 logging.basicConfig(level=logging.DEBUG if settings.DEBUG else logging.INFO)
 logger = logging.getLogger(__name__)
@@ -85,6 +85,11 @@ app.include_router(soil.router,      prefix="/api/v1")
 app.include_router(diagnoses.router, prefix="/api/v1")
 app.include_router(seeds.router,     prefix="/api/v1")
 app.include_router(dashboard.router, prefix="/api/v1")
+app.include_router(sensors.router,  prefix="/api/v1")
+
+# Also mount at root level so ESP32 can POST to http://<IP>:8000/sensor-data
+# (no /api/v1 prefix needed in the Arduino sketch)
+app.include_router(sensors.router)
 
 # Direct root-level mounts for convenience (/dashboard/{farmer_id}, /rover/..., /manual-upload)
 app.include_router(dashboard.router, include_in_schema=False)

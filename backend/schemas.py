@@ -306,3 +306,58 @@ class FarmerDashboardResponse(_OrmBase):
     total_diagnoses:      int = 0
     total_soil_readings:  int = 0
 
+
+# ══════════════════════════════════════════════════════════════════════════
+#  ESP32 IoT SENSOR DATA
+# ══════════════════════════════════════════════════════════════════════════
+
+class SensorDataIn(BaseModel):
+    """
+    Payload pushed by the ESP32 node via HTTP POST /sensor-data.
+
+    Only soil_status is required for the initial prototype.
+    All other fields are Optional so new sensors can be added to the
+    ESP32 sketch and backend independently.
+    """
+    soil_status: str = Field(
+        ...,
+        description="Soil moisture reading: 'WET' or 'DRY'",
+        examples=["WET"],
+    )
+    co2:         Optional[float] = Field(None, ge=0,   description="CO₂ concentration (ppm)")
+    nitrogen:    Optional[float] = Field(None, ge=0,   description="Nitrogen (mg/kg)")
+    phosphorus:  Optional[float] = Field(None, ge=0,   description="Phosphorus (mg/kg)")
+    potassium:   Optional[float] = Field(None, ge=0,   description="Potassium (mg/kg)")
+
+    @field_validator("soil_status")
+    @classmethod
+    def validate_soil_status(cls, v: str) -> str:
+        val = v.strip().upper()
+        if val not in {"WET", "DRY"}:
+            raise ValueError("soil_status must be 'WET' or 'DRY'")
+        return val
+
+
+class SensorDataOut(BaseModel):
+    """Latest sensor state returned to the React frontend via GET /sensor-data."""
+    soil_status:  Optional[str]   = None
+    co2:          Optional[float] = None
+    nitrogen:     Optional[float] = None
+    phosphorus:   Optional[float] = None
+    potassium:    Optional[float] = None
+    last_updated: Optional[datetime] = None
+    reading_id:   Optional[int]   = None
+
+
+class SensorReadingHistoryItem(BaseModel):
+    """One row in the historical sensor data timeline."""
+    id:           int
+    timestamp:    datetime
+    soil_status:  str
+    co2:          Optional[float]
+    nitrogen:     Optional[float]
+    phosphorus:   Optional[float]
+    potassium:    Optional[float]
+
+    model_config = ConfigDict(from_attributes=True)
+
