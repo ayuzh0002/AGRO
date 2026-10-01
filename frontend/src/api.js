@@ -206,3 +206,29 @@ export const runMLPredict = async (payload = {}) => {
   }
 };
 
+// ── Crop Recommendation ──
+export const getCropRecommendation = async (topK = 5) => {
+  try {
+    return await request(`/crop-recommendation?top_k=${topK}`);
+  } catch {
+    const res = await fetch(`http://localhost:8000/crop-recommendation?top_k=${topK}`);
+    return res.json();
+  }
+};
+
+export const getCropRecommendationManual = async (payload = {}) => {
+  try {
+    return await request('/crop-recommendation/manual', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    const res = await fetch('http://localhost:8000/crop-recommendation/manual', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    return res.json();
+  }
+};
+

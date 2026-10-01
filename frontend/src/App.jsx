@@ -9,6 +9,7 @@ import SoilPage from './pages/SoilPage';
 import SeedsPage from './pages/SeedsPage';
 import IoTPage from './pages/IoTPage';
 import FieldMonitoringPage from './pages/FieldMonitoringPage';
+import CropRecommendationPage from './pages/CropRecommendationPage';
 
 const NAV = [
   { to: '/',                  icon: '🏠', label: 'Home' },
@@ -19,6 +20,7 @@ const NAV = [
   { to: '/diagnose',          icon: '🔬', label: 'Diagnose' },
   { to: '/soil',              icon: '🧪', label: 'Soil Data' },
   { to: '/seeds',             icon: '🌱', label: 'Seed Exchange' },
+  { to: '/crop-recommendation', icon: '🤖', label: 'Crop AI' },
 ];
 
 function Sidebar({ open, onClose }) {
@@ -58,6 +60,7 @@ function PageTitle() {
     '/diagnose': ['Crop Diagnosis', 'Upload a plant photo for AI analysis'],
     '/soil': ['Soil Data', 'Browse rover soil telemetry readings'],
     '/seeds': ['Seed Exchange', 'Farmer-to-farmer seed marketplace'],
+    '/crop-recommendation': ['AI Crop Recommendation', 'ML + IoT sensor data + Gemini AI advisory — find the best crop for your field'],
   };
   const path = loc.pathname;
   // Dashboard path handling
@@ -105,6 +108,7 @@ export default function App() {
               <Route path="/diagnose" element={<DiagnosePage />} />
               <Route path="/soil" element={<SoilPage />} />
               <Route path="/seeds" element={<SeedsPage />} />
+              <Route path="/crop-recommendation" element={<CropRecommendationPage />} />
             </Routes>
           </div>
         </main>

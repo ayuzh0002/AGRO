@@ -23,7 +23,7 @@ from backend.config import settings
 from backend.database import Base, engine
 
 # ── Routers ────────────────────────────────────────────────────────────────
-from backend.routers import dashboard, diagnoses, farmers, rover, seeds, soil, sensors, weather, farm
+from backend.routers import dashboard, diagnoses, farmers, rover, seeds, soil, sensors, weather, farm, crop_recommend
 
 logging.basicConfig(level=logging.DEBUG if settings.DEBUG else logging.INFO)
 logger = logging.getLogger(__name__)
@@ -87,12 +87,14 @@ app.include_router(seeds.router,     prefix="/api/v1")
 app.include_router(dashboard.router, prefix="/api/v1")
 app.include_router(sensors.router,   prefix="/api/v1")
 app.include_router(weather.router,   prefix="/api/v1")
-app.include_router(farm.router,      prefix="/api/v1")
+app.include_router(farm.router,          prefix="/api/v1")
+app.include_router(crop_recommend.router, prefix="/api/v1")
 
 # Also mount at root level so endpoints like /weather work directly
 app.include_router(sensors.router)
 app.include_router(weather.router)
-app.include_router(farm.router)   # /farm-weather, /agriculture-analysis, /ai/*
+app.include_router(farm.router)            # /farm-weather, /agriculture-analysis, /ai/*
+app.include_router(crop_recommend.router)  # /crop-recommendation
 
 # Direct root-level mounts for convenience (/dashboard/{farmer_id}, /rover/..., /manual-upload)
 app.include_router(dashboard.router, include_in_schema=False)
